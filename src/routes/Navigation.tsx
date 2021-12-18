@@ -1,45 +1,52 @@
-import React from "react";
+import React, {Suspense} from "react";
 import {
     BrowserRouter as Router,
     Switch,
     Route,
-    NavLink
+    NavLink, Redirect
 } from "react-router-dom";
 import logo from '../logo.svg'
+import {Routes} from "./routes";
 
 export const Navigation = () => {
     return (
-        <Router>
-            <div className="main-layout">
-                <nav>
-                    <img src={logo} alt="React Logo"/>
-                    <ul>
-                        <li>
-                            <NavLink exact activeClassName="nav-active" to="/">Home</NavLink>
-                        </li>
-                        <li>
-                            <NavLink exact activeClassName="nav-active" to="/about">About</NavLink>
-                        </li>
-                        <li>
-                            <NavLink exact activeClassName="nav-active" to="/users">Users</NavLink>
-                        </li>
-                    </ul>
-                </nav>
+        <Suspense fallback={<span>Loading</span>}>
+            <Router>
+                <div className="main-layout">
+                    <nav>
+                        <img src={logo} alt="React Logo"/>
+                        <ul>
+                            {
+                                Routes.map(({path, name}) => {
+                                    return (
+                                        <li key={path}>
+                                            <NavLink exact activeClassName="nav-active"
+                                                     to={path}>{name}</NavLink>
+                                        </li>
+                                    );
+                                })
+                            }
 
-                {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-                <Switch>
-                    <Route path="/about">
-                        <h1>About</h1>
-                    </Route>
-                    <Route path="/users">
-                        <h1>users</h1>
-                    </Route>
-                    <Route path="/">
-                        <h1>/</h1>
-                    </Route>
-                </Switch>
-            </div>
-        </Router>
+                        </ul>
+                    </nav>
+
+                    <Switch>
+                        {
+                            Routes.map(({path, component: Component}) => (
+                                <Route
+                                    key={path}
+                                    path={path}
+                                    render={() => {
+                                        return <Component/>
+                                    }}/>
+                            ))
+                        }
+
+                        <Redirect to={Routes[0].path}/>
+                    </Switch>
+                </div>
+            </Router>
+        </Suspense>
+
     );
 }
