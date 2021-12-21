@@ -7,7 +7,15 @@ import {
     NavLink
 } from "react-router-dom";
 import logo from '../logo.svg'
-import {FormikAbstraction, FormikBasicPage, FormikComponentsPage, FormikYupPage, RegisterPage} from "../03-forms/pages";
+import {
+    DynamicForm,
+    FormikAbstraction,
+    FormikBasicPage,
+    FormikComponentsPage,
+    FormikYupPage,
+    RegisterFormikPage,
+    RegisterPage
+} from "../03-forms/pages";
 
 export const Navigation = () => {
     return (
@@ -18,6 +26,10 @@ export const Navigation = () => {
                     <ul>
                         <li>
                             <NavLink exact activeClassName="nav-active" to="/register">Register Page</NavLink>
+                        </li>
+                        <li>
+                            <NavLink exact activeClassName="nav-active" to="/registerFormik">Register Formik
+                                Page</NavLink>
                         </li>
                         <li>
                             <NavLink exact activeClassName="nav-active" to="/formikBasic">Formik Basic</NavLink>
@@ -33,6 +45,10 @@ export const Navigation = () => {
                             <NavLink exact activeClassName="nav-active" to="/formikAbstraction">Formik
                                 Abstraction</NavLink>
                         </li>
+                        <li>
+                            <NavLink exact activeClassName="nav-active" to="/dynamicForm">Dynamic Form
+                            </NavLink>
+                        </li>
 
                     </ul>
                 </nav>
@@ -41,19 +57,26 @@ export const Navigation = () => {
             renders the first one that matches the current URL. */}
                 <Switch>
                     <Route path="/formikBasic">
-                        <FormikBasicPage />
+                        <FormikBasicPage/>
                     </Route>
                     <Route path="/formikYup">
-                        <FormikYupPage />
+                        <FormikYupPage/>
                     </Route>
                     <Route path="/register">
-                        <RegisterPage />
+                        <RegisterPage/>
                     </Route>
                     <Route path="/formikComponents">
-                        <FormikComponentsPage />
-                    </Route> <Route path="/formikAbstraction">
-                    <FormikAbstraction />
-                </Route>
+                        <FormikComponentsPage/>
+                    </Route>
+                    <Route path="/formikAbstraction">
+                        <FormikAbstraction/>
+                    </Route>
+                    <Route path="/registerFormik">
+                        <RegisterFormikPage/>
+                    </Route>
+                    <Route path="/dynamicForm">
+                        <DynamicForm/>
+                    </Route>
                 </Switch>
             </div>
         </Router>
